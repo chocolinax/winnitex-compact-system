@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
 
-    return ['token' => $token->plainTextToken];
+    $validator = Validator::make($request->all(), [
+        'device_id' => 'required',
+    ]);
+
+    if ($validator->fails()) {
+        $response = $validator->messages();
+    } else {
+
+        $user = Device::create([
+            'device_id' => $request->input('device_id')
+        ]);
+
+        $token = $user->createToken($request->token_name);
+
+        $response = ['token' => $token->plainTextToken];
+    }
+
+    return $response;
 });
