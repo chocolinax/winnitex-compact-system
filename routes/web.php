@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
+    $token = $request->user('api')->createToken($request->token_name);
 
     return ['token' => $token->plainTextToken];
 });
