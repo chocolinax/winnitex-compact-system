@@ -34,7 +34,7 @@ Route::post('/tokens/create', function (Request $request) {
             'device_id' => $request->device_id
         ]);
 
-        $token = !$user->currentAccessToken()?:$user->createToken($request->device_id);
+        $token = (!$user->currentAccessToken())?:$user->createToken($request->device_id);
 
         $response = ['token' => $token->plainTextToken];
     }
