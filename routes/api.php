@@ -44,6 +44,12 @@ Route::post('/tokens/create', function (Request $request) {
     return $response;
 });
 
+Route::middleware('auth:sanctum')->get('/modules/get', function (Request $request) {
+    return Module::all();
+});
+
+
+
 Route::post('/module/create', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
