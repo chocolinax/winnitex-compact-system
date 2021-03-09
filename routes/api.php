@@ -53,11 +53,11 @@ Route::post('/module/create', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $s = System::firstOrCreate();
+        System::firstOrCreate();
 
         $response = Module::create([
             'name' => $request->name,
-            'system_id' => $s->getKey()
+            'system_id' => System::find(1)->getKey()
         ]);
     }
 
