@@ -34,9 +34,9 @@ Route::post('/tokens/create', function (Request $request) {
             'device_id' => $request->device_id
         ]);
 
-        $token = $user->tokens()->where('id', $request->device_id)?:$user->createToken($request->device_id);
+        $token = $user->tokens()->where('id', $request->device_id)?:$user->createToken($request->device_id)->plainTextToken;
 
-        $response = ['token' => $token->plainTextToken];
+        $response = ['token' => $token];
     }
 
     return $response;
