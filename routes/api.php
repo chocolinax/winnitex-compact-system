@@ -53,7 +53,7 @@ Route::post('/module/create', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $sys = System::firstOrCreate()->get();
+        $sys = System::firstOrCreate();
 
         $response = Module::create([
             'name' => $request->name,
