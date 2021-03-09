@@ -31,10 +31,10 @@ Route::post('/tokens/create', function (Request $request) {
     } else {
 
         $user = Device::create([
-            'device_id' => $request->input('device_id')
+            'device_id' => $request->device_id
         ]);
 
-        $token = $user->createToken($request->token_name);
+        $token = $user->createToken($request->device_id);
 
         $response = ['token' => $token->plainTextToken];
     }
