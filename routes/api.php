@@ -30,11 +30,11 @@ Route::post('/tokens/create', function (Request $request) {
         $response = $validator->messages();
     } else {
 
-        $user = Device::create([
+        $user = Device::firstOrCreate([
             'device_id' => $request->device_id
         ]);
 
-        $token = $user->createToken($request->device_id);
+        $token = !$user->currentAccessToken()?:$user->createToken($request->device_id);
 
         $response = ['token' => $token->plainTextToken];
     }
