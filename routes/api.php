@@ -57,7 +57,7 @@ Route::post('/module/create', function (Request $request) {
 
         $response = Module::create([
             'name' => $request->name,
-            'system_id' => $sys->getKey()
+            'system_id' => $sys->id
         ]);
     }
 
