@@ -45,7 +45,9 @@ Route::post('/tokens/create', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->get('/modules/get', function (Request $request) {
-    return Module::all();
+    $sys = System::find(1);
+    $modules = $sys->modules();
+    return $modules;
 });
 
 
