@@ -2,6 +2,7 @@
 
 use App\Models\Device;
 use App\Models\Module;
+use App\Models\PantryItem;
 use App\Models\System;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,10 @@ Route::middleware('auth:sanctum')->get('/modules/get', function (Request $reques
     return $modules;
 });
 
+Route::middleware('auth:sanctum')->get('/pantry_items/get', function (Request $request) {
+    return PantryItem::all();
+});
+
 
 
 Route::post('/module/create', function (Request $request) {
@@ -81,3 +86,10 @@ Route::get('/public', function (Request $request) {
 Route::get('/private', function (Request $request) {
     return response()->json(["message" => "Hello from a private endpoint! You need to have a valid access token to see this."]);
 })->middleware('jwt');
+
+// These endpoints require a valid access token with a "read:messages" scope.
+Route::get('/private-scoped', function (Request $request) {
+    return response()->json([
+        "message" => "Hello from a private endpoint! You need to have a valid access token and a scope of read:messages to see this."
+    ]);
+})->middleware('check.scope:read:messages');
