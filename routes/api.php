@@ -54,7 +54,7 @@ Route::middleware('auth:sanctum')->get('/pantry_items/get', function (Request $r
     return PantryItem::all();
 });
 
-Route::middleware('auth:sanctum')->get('/pantry_items/add', function (Request $request) {
+Route::middleware('auth:sanctum')->post('/pantry_items/add', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
         'name' => 'required',
