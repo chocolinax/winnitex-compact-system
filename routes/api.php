@@ -54,6 +54,23 @@ Route::middleware('auth:sanctum')->get('/pantry_items/get', function (Request $r
     return PantryItem::all();
 });
 
+Route::middleware('auth:sanctum')->get('/pantry_items/add', function (Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'name' => 'required',
+    ]);
+
+    if ($validator->fails()) {
+        $response = $validator->messages();
+    } else {
+        $response = PantryItem::create([
+            'name' => $request->name,
+        ]);
+    }
+
+    return $response;
+});
+
 
 
 Route::post('/module/create', function (Request $request) {
