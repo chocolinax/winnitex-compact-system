@@ -15,6 +15,8 @@ class PantryItem extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
+        'code', 'product',
+        'manufacturer',
+        'best_before'
     ];
 }

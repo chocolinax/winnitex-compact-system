@@ -57,14 +57,20 @@ Route::middleware('auth:sanctum')->get('/pantry_items/get', function (Request $r
 Route::middleware('auth:sanctum')->post('/pantry_items/add', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
-        'name' => 'required',
+        'code' => 'required|unique:pantry_items,code',
+        'product' => 'required',
+        'manufacturer' => 'required',
+        'best_before' => 'required|date'
     ]);
 
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
         $response = PantryItem::create([
-            'name' => $request->name,
+            'code' => $request->code,
+            'product' => $request->product,
+            'manufacturer' => $request->manufacturer,
+            'best_before' => $request->best_before,
         ]);
     }
 

@@ -15,7 +15,10 @@ class CreatePantryitemsTable extends Migration
     {
         Schema::create('pantry_items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('code');
+            $table->string('product');
+            $table->string('manufacturer');
+            $table->string('best_before');
             $table->timestamps();
         });
     }
