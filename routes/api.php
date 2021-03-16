@@ -77,6 +77,23 @@ Route::middleware('auth:sanctum')->post('/pantry_items/add', function (Request $
     return $response;
 });
 
+Route::middleware('auth:sanctum')->post('/pantry_items/del', function (Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'code' => 'required'
+    ]);
+
+    if ($validator->fails()) {
+        $response = $validator->messages();
+    } else {
+        $response = PantryItem::where([
+            'code' => $request->code
+        ])->delete();
+    }
+
+    return $response;
+});
+
 
 
 Route::post('/module/create', function (Request $request) {
