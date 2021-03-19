@@ -23,9 +23,23 @@ use Illuminate\Support\Facades\Validator;
 // ...
 
 // These endpoints require a valid access token.
-Route::middleware('jwt')->get('/modules/get', function (Request $request) {
-    $modules = System::find(1)->modules;
-    return $modules;
+Route::middleware('jwt')->post('/modules/get', function (Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'role' => 'required|array'
+    ]);
+
+    if ($validator->fails()) {
+        $response = $validator->messages();
+    } else {
+        if (in_array("Domain Admins", $request->role)) {
+            $response = System::find(1)->modules;
+        } else {
+            $response = System::find(1)->modules;
+        }
+    }
+
+    return $response;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
@@ -74,7 +88,7 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
 
 
 // These endpoints require a valid access token with a "read:messages" scope.
-Route::post('/module/create', function (Request $request) {
+Route::middleware('check.scope:read:messages')->post('/module/create', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
         'name' => 'required',
