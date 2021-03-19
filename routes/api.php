@@ -35,7 +35,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         if (in_array("Domain Admins", $request->role)) {
             $response = System::find(1)->modules;
         } else {
-            $response = System::find(1)->modules;
+            $response = System::find(1)->modules->where();
         }
     }
 
@@ -92,6 +92,7 @@ Route::middleware('check.scope:read:messages')->post('/module/create', function 
 
     $validator = Validator::make($request->all(), [
         'name' => 'required',
+        'allow_role' => 'required|array'
     ]);
 
     if ($validator->fails()) {
@@ -101,6 +102,7 @@ Route::middleware('check.scope:read:messages')->post('/module/create', function 
 
         $response = Module::create([
             'name' => $request->name,
+            'allow_role' => $request->allow_role
             'system_id' => $sys->id
         ]);
     }
