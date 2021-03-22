@@ -16,7 +16,7 @@ class CreateModulesTable extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->array('allow_role');
+            $table->json('allow_role');
             $table->string('system_id');
             $table->timestamps();
         });
