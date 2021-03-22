@@ -15,6 +15,6 @@ class Module extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'system_id'
+        'name', 'allow_role', 'system_id'
     ];
 }
