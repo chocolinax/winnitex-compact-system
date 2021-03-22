@@ -17,4 +17,8 @@ class Module extends Model
     protected $fillable = [
         'name', 'allow_role', 'system_id'
     ];
+
+    protected $casts = [
+        'allow_role' => 'array'
+    ];
 }
