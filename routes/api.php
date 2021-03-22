@@ -33,7 +33,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $response = System::find(1)->modules()->whereHas('rules', function ($q) use ($request) {
+        $response = System::find(1)->modules()->whereHas('roles', function ($q) use ($request) {
             $q->whereIn('name', $request->role);
         });
     }
@@ -112,7 +112,7 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
             ]);
         }
 
-        $response = Module::where('name', $request->name);
+        $response = Module::where('name', $request->name)->roles();
     }
 
     return $response;
