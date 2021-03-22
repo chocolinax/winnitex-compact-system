@@ -91,7 +91,7 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
     Route::middleware('jwt')->post('/module/create', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
-        'name' => 'required',
+        'name' => 'required|unique:modules,name',
         'allow_role' => 'required|array'
     ]);
 
@@ -112,7 +112,7 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
             ]);
         }
 
-        $response = Module::where('name', $request->name)->roles();
+        $response = Module::where('name', $request->name)->roles;
     }
 
     return $response;
