@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Module extends Model
+class ModuleAllowRole extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,6 @@ class Module extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'system_id'
+        'name', 'module_id'
     ];
-
-    /**
-     * Get the roles allowed to see the module.
-     */
-    public function roles()
-    {
-        return $this->hasMany(ModuleAllowRole::class);
-    }
 }

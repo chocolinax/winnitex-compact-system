@@ -2,6 +2,7 @@
 
 use App\Models\Device;
 use App\Models\Module;
+use App\Models\ModuleAllowRole;
 use App\Models\PantryItem;
 use App\Models\System;
 use Illuminate\Http\Request;
@@ -32,8 +33,8 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $response = System::find(1)->modules->where(function ($q) use ($request) {
-            return in_array($q->allow_role, $request->role);
+        $response = System::find(1)->modules->whereHas('rules', function ($q) use ($request) {
+            $q->whereIn('name', $request->role);
         });
     }
 
@@ -99,11 +100,19 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
     } else {
         $sys = System::firstOrCreate();
 
-        $response = Module::create([
+        $module = Module::create([
             'name' => $request->name,
-            'allow_role' => $request->allow_role,
             'system_id' => $sys->id
         ]);
+
+        foreach ($request->allow_role as $allow_role_name ) {
+            ModuleAllowRole::create([
+                'name' => $allow_role_name,
+                'module_id' => $module->id
+            ]);
+        }
+
+        $response = Module::where('name', $request->name)->roles();
     }
 
     return $response;
