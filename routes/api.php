@@ -103,7 +103,7 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
 
         $response = Module::create([
             'name' => $request->name,
-            'allow_role' => $request->allow_role
+            'allow_role' => $request->allow_role,
             'system_id' => $sys->id
         ]);
     }
