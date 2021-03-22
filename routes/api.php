@@ -32,11 +32,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        if (in_array("Domain Admins", $request->role)) {
-            $response = System::find(1)->modules;
-        } else {
-            $response = System::find(1)->modules->where();
-        }
+        $response = System::find(1)->modules->whereIn('allow_role', $request->role);
     }
 
     return $response;
