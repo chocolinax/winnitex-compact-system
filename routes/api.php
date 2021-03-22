@@ -88,7 +88,8 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
 
 
 // These endpoints require a valid access token with a "read:messages" scope.
-Route::middleware('check.scope:read:messages')->post('/module/create', function (Request $request) {
+// Route::middleware('check.scope:read:messages')->post('/module/create', function (Request $request) {
+    Route::middleware('jwt')->post('/module/create', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
         'name' => 'required',
