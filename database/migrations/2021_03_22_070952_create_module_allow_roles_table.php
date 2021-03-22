@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateModuleAllowRoleTable extends Migration
+class CreateModuleAllowRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateModuleAllowRoleTable extends Migration
      */
     public function up()
     {
-        Schema::create('module_allow_role', function (Blueprint $table) {
+        Schema::create('module_allow_roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('module_id');
@@ -28,6 +28,6 @@ class CreateModuleAllowRoleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('module_allow_role');
+        Schema::dropIfExists('module_allow_roles');
     }
 }
