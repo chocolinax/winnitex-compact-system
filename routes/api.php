@@ -33,7 +33,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $response = System::find(1)->modules->whereHas('rules', function ($q) use ($request) {
+        $response = System::find(1)->modules()->whereHas('rules', function ($q) use ($request) {
             $q->whereIn('name', $request->role);
         });
     }
