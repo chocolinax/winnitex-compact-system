@@ -105,14 +105,14 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
             'system_id' => $sys->id
         ]);
 
-        foreach ($request->allow_role as $allow_role_name ) {
+        foreach ($request->allow_role as $allow_role_name) {
             ModuleAllowRole::create([
                 'name' => $allow_role_name,
                 'module_id' => $module->id
             ]);
         }
 
-        $response = Module::where('name', $request->name)->roles();
+        $response = Module::where('name', $request->name);
     }
 
     return $response;
