@@ -35,7 +35,11 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     } else {
         $modules = System::find(1)->modules();
 
-        $response = $modules->roles()->get();
+        $modules->each(function ($module) use ($request) {
+            $module->roles()->whereIn('name', $request->role)->get();
+        });
+
+        $response = $modules;
     }
 
     return $response;
