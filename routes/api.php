@@ -112,7 +112,7 @@ Route::middleware('jwt')->post('/pantry_items/del', function (Request $request) 
             ]);
         }
 
-        $response = Module::where('name', $request->name);
+        $response = Module::where('name', $request->name)->get();
     }
 
     return $response;
