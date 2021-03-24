@@ -36,14 +36,14 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         $modules = System::find(1)->modules()->get();
 
         // $response = $modules->map(function ($module) use ($request) {
-        //     $role_names = $module->roles()->pluck('name')->toArray();
+        //     $role_names = $module->roles()->select('name');
         //     $result = array_intersect($request->roles, $role_names);
         //     if ($result)
         //         return $module;
         // });
     }
 
-    return $modules->find(1)->roles()->get()->pluck('name')->toArray();
+    return $modules->roles()->select('name')->get();
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
