@@ -33,7 +33,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $modules = System::find(1)->modules();
+        $modules = System::find(1)->modules()->get();
 
         $response = $modules->map(function ($module) use ($request) {
             $roles = $module->roles()->pluck('name');
@@ -44,7 +44,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
                 return [];
         });
     }
-    
+
     return $response;
 });
 
