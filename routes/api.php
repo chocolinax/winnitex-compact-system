@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Validator;
 Route::middleware('jwt')->post('/modules/get', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
-        'role' => 'required|array'
+        'roles' => 'required|array'
     ]);
 
     if ($validator->fails()) {
@@ -35,11 +35,16 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     } else {
         $modules = System::find(1)->modules();
 
-        $response = $modules->whereHas('roles', function ($q) use ($request) {
-            $q->whereIn('name', $request->role);
-        })->get();
+        $response = $modules->map(function ($module) use ($request) {
+            $roles = $module->roles()->pluck('name');
+            $result = array_intersect($roles, $request->roles);
+            if ($result == $roles)
+                return $module;
+            else
+                return [];
+        });
     }
-
+    
     return $response;
 });
 
