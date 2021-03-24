@@ -39,9 +39,9 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
             $role_names = $module->roles()->pluck('module_allow_roles.name')->toArray();
             $result = array_intersect($request->roles, $role_names);
             if ($result == $role_names)
-                return Module::find($module->id());
+                return Module::find($module->id())->first();
             else
-                return Module::find($module->id());
+                return Module::find($module->id())->first();
         });
     }
 
