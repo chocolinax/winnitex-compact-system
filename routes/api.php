@@ -41,7 +41,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
             if ($result == $role_names)
                 return Module::find($module->id());
             else
-                return $module;
+                return Module::find($module->id());
         });
     }
 
