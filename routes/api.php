@@ -39,7 +39,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
             $role_names = $module->roles()->pluck('name')->toArray();
             $result = array_intersect($request->roles, $role_names);
             if (!empty($result))
-                return $module;
+                return $result;
         });
     }
 
