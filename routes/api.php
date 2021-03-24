@@ -35,15 +35,15 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     } else {
         $modules = System::find(1)->modules()->get();
 
-        // $response = $modules->map(function ($module) use ($request) {
-        //     $role_names = $module->roles()->select('name');
-        //     $result = array_intersect($request->roles, $role_names);
-        //     if ($result)
-        //         return $module;
-        // });
+        $response = $modules->map(function ($module) use ($request) {
+            $role_names = $module->roles()->select('name')->get();
+            $result = array_intersect($request->roles, $role_names);
+            if ($result == $role_names)
+                return $module;
+        });
     }
 
-    return $modules->find(1)->roles()->select('name')->get();
+    return $response;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
