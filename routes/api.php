@@ -38,10 +38,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         $response = $modules->map(function ($module) use ($request) {
             $role_names = $module->roles()->pluck('module_allow_roles.name')->toArray();
             $result = array_intersect($request->roles, $role_names);
-            if (true)
-                return $module;
-            else
-                return [];
+            return $result;
         });
     }
 
