@@ -38,7 +38,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         $response = $modules->map(function ($module) use ($request) {
             return $module->whereHas('roles', function ($q) use ($request) {
                 $q->roles()->whereIn('name', $request->role);
-            });
+            })->first();
         })->all();
     }
 
