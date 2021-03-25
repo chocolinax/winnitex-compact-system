@@ -43,7 +43,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         // });
     }
 
-    return $modules->find(1)->roles()->select('name')->get()->pluck('name');
+    return $modules->find(1)->roles()->select('name')->pluck('name');
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
