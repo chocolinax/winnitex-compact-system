@@ -45,7 +45,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         // });
     }
 
-    return $modules->find(3)->roles()->select('name')->get()->map(function ($role) {
+    return $modules->find(3)->roles()->select('name')->get()->first()->map(function ($role) {
         return $role->name;
     });
 });
