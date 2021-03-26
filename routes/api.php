@@ -45,7 +45,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         // });
     }
 
-    return array_values($modules->find(3)->roles()->select('name')->toArray());
+    return array_values($modules->find(3)->roles()->select('name')->get()->toArray());
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
