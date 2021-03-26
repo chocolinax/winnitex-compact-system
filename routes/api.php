@@ -30,11 +30,11 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         'roles' => 'required|array'
     ]);
 
+    $modules = System::find(1)->modules()->get();
+
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $modules = System::find(1)->modules()->get();
-
         $response = $modules->map(function ($module) use ($request) {
             $role_names = $module->roles()->select('name')->get();
             if ($request->roles == $role_names->toArray())
