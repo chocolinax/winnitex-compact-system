@@ -37,13 +37,12 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     } else {
         $response = $modules->map(function ($module) use ($request) {
             $role_names = $module->roles->pluck('name');
-            $result = array_intersect($request->roles, $role_names->toArray());
-            if ($result == $role_names)
+            if (!array_diff($role_names->toArray(), $request->roles))
                 return $module;
         });
     }
 
-    return array_intersect($request->roles, $modules->find(1)->roles->pluck('name')->toArray());
+    return $response;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
