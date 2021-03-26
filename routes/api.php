@@ -46,7 +46,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     }
 
     return $modules->find(3)->whereHas('roles', function ($q) {
-        $q;
+        $q->select('name');
     })->get();
 });
 
