@@ -6,6 +6,7 @@ use App\Models\ModuleAllowRole;
 use App\Models\PantryItem;
 use App\Models\System;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
@@ -45,7 +46,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         // });
     }
 
-    return array_dot($modules->find(3)->roles);
+    return Arr::dot($modules->find(3)->roles);
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
