@@ -43,7 +43,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         });
     }
 
-    return $response;
+    return $modules->roles->pluck('name')->toArray();
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
