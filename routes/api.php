@@ -40,7 +40,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
             if (!array_diff($role_names->toArray(), $request->roles))
                 return $module;
             else
-                return;
+                return "";
         });
     }
 
