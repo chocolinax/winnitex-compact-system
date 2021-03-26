@@ -42,7 +42,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
         });
     }
 
-    return $request->roles;
+    return $request->all();
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
