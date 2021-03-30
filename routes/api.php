@@ -45,6 +45,21 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     return $response;
 });
 
+Route::middleware('jwt')->post('/asset/add', function (Request $request) {
+
+    $validator = Validator::make($request->all(), [
+        'assets' => 'required|array'
+    ]);
+
+    if ($validator->fails()) {
+        $response = $validator->messages();
+    } else {
+        $response = $request->assets
+    }
+
+    return $response;
+});
+
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
     return PantryItem::all();
 });
