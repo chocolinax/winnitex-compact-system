@@ -48,6 +48,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
 Route::middleware('jwt')->post('/asset/add', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
+        'team' => 'required',
         'name' => 'required',
         'ext' => 'required',
         'loc' => 'required',
