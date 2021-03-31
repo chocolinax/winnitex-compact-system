@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssetStocktakeLineTable extends Migration
+class CreateAssetStocktakeLinesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAssetStocktakeLineTable extends Migration
      */
     public function up()
     {
-        Schema::create('asset_stocktake_line', function (Blueprint $table) {
+        Schema::create('asset_stocktake_lines', function (Blueprint $table) {
             $table->id();
             $table->integer('asset_stocktake_header_id')->unsigned();
             $table->string('name');
@@ -32,6 +32,6 @@ class CreateAssetStocktakeLineTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asset_stocktake_line');
+        Schema::dropIfExists('asset_stocktake_lines');
     }
 }

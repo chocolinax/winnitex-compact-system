@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssetStocktakeHeaderTable extends Migration
+class CreateAssetStocktakeHeadersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateAssetStocktakeHeaderTable extends Migration
      */
     public function up()
     {
-        Schema::create('asset_stocktake_header', function (Blueprint $table) {
+        Schema::create('asset_stocktake_headers', function (Blueprint $table) {
             $table->id();
             $table->string('team');
             $table->string('name');
@@ -31,6 +31,6 @@ class CreateAssetStocktakeHeaderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('asset_stocktake_header');
+        Schema::dropIfExists('asset_stocktake_headers');
     }
 }
