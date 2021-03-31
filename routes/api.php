@@ -64,6 +64,10 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
     return $response;
 });
 
+Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
+    return response()->json(["data" => "hello world"]);
+});
+
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
     return PantryItem::all();
 });
