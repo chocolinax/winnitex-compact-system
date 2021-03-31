@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\AssetStocktakeHeader;
+use App\Models\AssetStocktakeLine;
 use App\Models\Device;
 use App\Models\Module;
 use App\Models\ModuleAllowRole;
@@ -58,10 +60,25 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
-        $response = $request->assets;
+        $header = AssetStocktakeHeader::firstOrCreate([
+            'team' => $request->team,
+            'name' => $request->name,
+            'ext'  => $request->ext,
+            'location' => $request->loc
+        ]);
+
+        foreach ($request->assets as $key => $value) {
+            AssetStocktakeLine::create([
+                'asset_stocktake_header_id' => $header->id,
+                'name' => $value['product'],
+                'ser_no' => $value['code'],
+                'type' => $value['type'],
+                'brand' => $value['brand']
+            ]);
+        }
     }
 
-    return $response;
+    return AssetStocktakeLine::all();
 });
 
 Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
