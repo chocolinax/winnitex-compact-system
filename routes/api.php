@@ -92,7 +92,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         }
     }
 
-    return $codes;
+    return ;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
