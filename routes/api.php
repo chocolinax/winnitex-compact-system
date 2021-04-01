@@ -65,8 +65,6 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         'assets' => 'required|json'
     ]);
 
-        $codes=null;
-
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
@@ -80,6 +78,8 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         $assets = json_decode($request->assets, true);
 
         $codes = array_column($assets, 'code');
+
+    return $codes;
         AssetStocktakeLine::whereNotIn('ser_no', $codes)->delete();
 
         foreach ($assets as $key => $value) {
@@ -92,8 +92,6 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
             ]);
         }
     }
-
-    return $codes;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
