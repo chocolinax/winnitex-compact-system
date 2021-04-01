@@ -91,7 +91,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         }
     }
 
-    return AssetStocktakeLine::all();
+    return $codes;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
