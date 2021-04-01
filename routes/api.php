@@ -65,6 +65,8 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         'assets' => 'required|json'
     ]);
 
+        $codes=NIL;
+
     if ($validator->fails()) {
         $response = $validator->messages();
     } else {
