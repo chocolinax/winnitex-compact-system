@@ -48,7 +48,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
 });
 
 Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
-    return response()->json(["data" => "hello world"]);
+    return AssetStocktakeHeader::all();
 });
 
 Route::middleware('jwt')->get('/asset/get', function (Request $request) {
