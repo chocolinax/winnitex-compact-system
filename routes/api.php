@@ -47,6 +47,14 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
     return $response;
 });
 
+Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
+    return response()->json(["data" => "hello world"]);
+});
+
+Route::middleware('jwt')->get('/asset/get', function (Request $request) {
+    return AssetStocktakeLine::all();
+});
+
 Route::middleware('jwt')->post('/asset/add', function (Request $request) {
 
     $validator = Validator::make($request->all(), [
@@ -81,10 +89,6 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
     }
 
     return AssetStocktakeLine::all();
-});
-
-Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
-    return response()->json(["data" => "hello world"]);
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
