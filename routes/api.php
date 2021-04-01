@@ -77,8 +77,11 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
 
         $assets = json_decode($request->assets, true);
 
+        $codes = array_column($assets, 'code');
+        AssetStocktakeLine::whereNotIn('ser_no', $codes)->delete();
+
         foreach ($assets as $key => $value) {
-            AssetStocktakeLine::firstOrCreate([
+            AssetStocktakeLine::updateOrCreate([
                 'asset_stocktake_header_id' => $header->id,
                 'name' => $value['product'],
                 'ser_no' => $value['code'],
