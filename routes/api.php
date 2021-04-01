@@ -67,7 +67,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
             'location' => $request->loc
         ]);
 
-        $assets = json_decode($request->assets);
+        $assets = json_decode($request->assets, true);
 
         foreach ($assets as $key => $value) {
             AssetStocktakeLine::create([
