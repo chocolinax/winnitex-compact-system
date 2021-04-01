@@ -67,7 +67,9 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
             'location' => $request->loc
         ]);
 
-        foreach ($request->assets as $key => $value) {
+        $assets = json_decode($request->assets);
+
+        foreach ($assets as $key => $value) {
             AssetStocktakeLine::create([
                 'asset_stocktake_header_id' => $header->id,
                 'name' => $value['product'],
