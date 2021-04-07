@@ -81,6 +81,8 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         $response = AssetStocktakeLine::whereNotIn('ser_no', $codes)->delete();
 
         foreach ($assets as $key => $value) {
+            if ($value == null)
+                break;
             AssetStocktakeLine::updateOrCreate([
                 'asset_stocktake_header_id' => $header->id,
                 'name' => $value['product'],
