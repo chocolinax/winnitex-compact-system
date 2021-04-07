@@ -78,7 +78,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         $assets = json_decode($request->assets, true);
 
         $codes = array_column($assets, 'code');
-        $response = AssetStocktakeLine::whereNotIn('ser_no', $codes)->delete();
+        AssetStocktakeLine::whereNotIn('ser_no', $codes)->delete();
 
         foreach ($assets as $key => $value) {
             if ($value == null)
@@ -92,7 +92,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
             ]);
         }
 
-        // AssetStocktakeLine::all();
+        $response = AssetStocktakeLine::all();
     }
 
     return $response;
