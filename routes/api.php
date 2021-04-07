@@ -62,7 +62,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         'name' => 'required',
         'ext' => 'required',
         'loc' => 'required',
-        'assets' => 'required|json'
+        'assets' => 'required'
     ]);
 
     if ($validator->fails()) {
