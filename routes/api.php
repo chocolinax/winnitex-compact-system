@@ -62,7 +62,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         'name' => 'required',
         'ext' => 'required',
         'loc' => 'required',
-        'assets' => 'required'
+        'assets' => 'required|json'
     ]);
 
     if ($validator->fails()) {
@@ -78,7 +78,7 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
         $assets = json_decode($request->assets, true);
 
         $codes = array_column($assets, 'code');
-        $response = AssetStocktakeLine::whereNotIn('ser_no', $codes)->delete();
+        $response = AssetStocktakeLine::whereNotIn('ser_no', $codes);//->delete();
 
         foreach ($assets as $key => $value) {
             AssetStocktakeLine::updateOrCreate([
