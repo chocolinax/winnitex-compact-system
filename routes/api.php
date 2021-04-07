@@ -7,6 +7,7 @@ use App\Models\Module;
 use App\Models\ModuleAllowRole;
 use App\Models\PantryItem;
 use App\Models\System;
+use App\Models\WtxUserList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
@@ -48,7 +49,7 @@ Route::middleware('jwt')->post('/modules/get', function (Request $request) {
 });
 
 Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
-    return AssetStocktakeHeader::all();
+    return WtxUserList::all();
 });
 
 Route::middleware('jwt')->get('/asset/get', function (Request $request) {
