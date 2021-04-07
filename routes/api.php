@@ -89,9 +89,11 @@ Route::middleware('jwt')->post('/asset/add', function (Request $request) {
                 'brand' => $value['brand']
             ]);
         }
+
+        $response = AssetStocktakeLine::all();
     }
 
-    return AssetStocktakeLine::all();
+    return $response;
 });
 
 Route::middleware('jwt')->get('/pantry_items/get', function (Request $request) {
