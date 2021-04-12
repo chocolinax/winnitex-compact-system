@@ -53,7 +53,8 @@ Route::middleware('jwt')->get('/team_info/get', function (Request $request) {
 });
 
 Route::middleware('jwt')->get('/asset/get', function (Request $request) {
-    return AssetStocktakeLine::all();
+    $response = AssetStocktakeHeader::with('line')->get();
+    return $response;
 });
 
 Route::middleware('jwt')->post('/asset/add', function (Request $request) {

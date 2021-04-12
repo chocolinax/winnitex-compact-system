@@ -18,4 +18,12 @@ class AssetStocktakeHeader extends Model
         'team', 'name', 'ext',
         'location', 'status'
     ];
+
+    /**
+     * Get the line associated with the header.
+     */
+    public function line()
+    {
+        return $this->hasOne(AssetStocktakeLine::class);
+    }
 }
