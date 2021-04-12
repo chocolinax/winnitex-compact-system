@@ -22,8 +22,8 @@ class AssetStocktakeHeader extends Model
     /**
      * Get the line associated with the header.
      */
-    public function line()
+    public function lines()
     {
-        return $this->hasOne(AssetStocktakeLine::class);
+        return $this->hasMany(AssetStocktakeLine::class);
     }
 }
