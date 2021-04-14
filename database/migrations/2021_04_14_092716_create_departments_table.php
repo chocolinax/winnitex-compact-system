@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePantryitemsTable extends Migration
+class CreateDepartmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePantryitemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pantry_items', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('code');
-            $table->string('product');
-            $table->string('manufacturer');
-            $table->string('best_before');
+            $table->string('department');
+            $table->string('team');
+            $table->enum('status', ['N', 'D'])->default('N');
+            $table->string('create_user_id');
+            $table->integer('last_update_user_id')->unsigned();
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreatePantryitemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pantry_items');
+        Schema::dropIfExists('departments');
     }
 }
