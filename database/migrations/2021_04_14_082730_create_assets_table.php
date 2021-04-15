@@ -17,17 +17,18 @@ class CreateAssetsTable extends Migration
             $table->id();
             $table->integer('brand_id')->unsigned();
             $table->integer('type_id')->unsigned();
-            $table->string('model_name');
-            $table->string('serial_no');
-            $table->timestamp('purchased_at');
-            $table->string('vendor_name');
-            $table->string('alias_name')->nullable();
-            $table->string('spec')->nullable();
-            $table->string('comment')->nullable();
+            $table->string('model_name', 50);
+            $table->string('serial_no', 50);
+            $table->timestamp('purchased_date');
+            $table->string('vendor_name', 50);
+            $table->string('alias_name', 20)->nullable();
+            $table->string('spec', 255)->nullable();
+            $table->string('comment', 255)->nullable();
             $table->enum('status', ['N', 'D'])->default('N');
-            $table->string('create_user_id');
-            $table->integer('last_update_user_id')->unsigned();
-            $table->timestamps();
+            $table->integer('create_user_login_id')->unsigned();
+            $table->integer('last_modified_user_login_id')->unsigned();
+            $table->timestamp('create_date_time');
+            $table->timestamp('last_modified_date_time');
         });
     }
 

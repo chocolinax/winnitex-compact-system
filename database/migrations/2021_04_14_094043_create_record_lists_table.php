@@ -17,12 +17,13 @@ class CreateRecordListsTable extends Migration
             $table->id();
             $table->integer('wtxuser_id')->unsigned();
             $table->integer('location_id')->unsigned();
-            $table->integer('asset')->unsigned();
-            $table->timestamp('stocktake_at');
+            $table->integer('asset_id')->unsigned();
+            $table->timestamp('stocktake_date');
             $table->enum('status', ['N', 'D'])->default('N');
-            $table->string('create_user_id');
-            $table->integer('last_update_user_id')->unsigned();
-            $table->timestamps();
+            $table->integer('create_user_login_id')->unsigned();
+            $table->integer('last_modified_user_login_id')->unsigned();
+            $table->timestamp('create_date_time');
+            $table->timestamp('last_modified_date_time');
         });
     }
 

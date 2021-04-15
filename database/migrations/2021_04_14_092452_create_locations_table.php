@@ -15,11 +15,12 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
-            $table->string('location');
+            $table->string('location', 20);
             $table->enum('status', ['N', 'D'])->default('N');
-            $table->string('create_user_id');
-            $table->integer('last_update_user_id')->unsigned();
-            $table->timestamps();
+            $table->integer('create_user_login_id')->unsigned();
+            $table->integer('last_modified_user_login_id')->unsigned();
+            $table->timestamp('create_date_time');
+            $table->timestamp('last_modified_date_time');
         });
     }
 

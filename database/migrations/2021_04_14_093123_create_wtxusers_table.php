@@ -15,14 +15,14 @@ class CreateWtxusersTable extends Migration
     {
         Schema::create('wtxusers', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('full_name', 50);
             $table->integer('department_id')->unsigned();
             $table->integer('ext');
             $table->enum('status', ['N', 'D'])->default('N');
-            $table->string('create_user_id');
-            $table->integer('last_update_user_id')->unsigned();
-            $table->timestamps();
+            $table->integer('create_user_login_id')->unsigned();
+            $table->integer('last_modified_user_login_id')->unsigned();
+            $table->timestamp('create_date_time');
+            $table->timestamp('last_modified_date_time');
         });
     }
 

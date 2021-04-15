@@ -15,11 +15,12 @@ class CreateTypesTable extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
+            $table->string('type', 20);
             $table->enum('status', ['N', 'D'])->default('N');
-            $table->string('create_user_id');
-            $table->integer('last_update_user_id')->unsigned();
-            $table->timestamps();
+            $table->integer('create_user_login_id')->unsigned();
+            $table->integer('last_modified_user_login_id')->unsigned();
+            $table->timestamp('create_date_time');
+            $table->timestamp('last_modified_date_time');
         });
     }
 
