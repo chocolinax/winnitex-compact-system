@@ -17,8 +17,8 @@ class CreateBrandsTable extends Migration
             $table->id();
             $table->string('brand', 20);
             $table->enum('status', ['N', 'D'])->default('N');
-            $table->integer('create_user_login_id')->unsigned();
-            $table->integer('last_modified_user_login_id')->unsigned();
+            $table->string('create_user_login_id');
+            $table->string('last_modified_user_login_id');
             $table->timestamp('create_date_time');
             $table->timestamp('last_modified_date_time');
         });
