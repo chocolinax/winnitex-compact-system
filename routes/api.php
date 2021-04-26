@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AssetController;
 use App\Models\AssetStocktakeHeader;
 use App\Models\AssetStocktakeLine;
 use App\Models\Device;
@@ -24,7 +25,9 @@ use Illuminate\Support\Facades\Validator;
 */
 
 // This endpoint does not need authentication.
-// ...
+Route::get('/asset/get/{groupBy}', [AssetController::class, 'user']);
+
+
 
 // These endpoints require a valid access token.
 Route::middleware('jwt')->post('/modules/get', function (Request $request) {
