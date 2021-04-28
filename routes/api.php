@@ -10,6 +10,7 @@ use App\Models\PantryItem;
 use App\Models\System;
 use App\Models\WtxUserList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,6 +28,13 @@ use Illuminate\Support\Facades\Validator;
 // This endpoint does not need authentication.
 Route::get('/asset/get/{groupBy}', [AssetController::class, 'user']);
 
+Route::get('users', function () {
+    $info = DB::table('wtxusers')
+        ->select('full_name_chi','full_name_eng', 'departments.department', 'departments.team')
+        ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
+        ->get();
+    return $info;
+});
 
 
 // These endpoints require a valid access token.
