@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Validator;
 */
 
 // This endpoint does not need authentication.
-Route::get('/asset/get/{groupBy}', [AssetController::class, 'user']);
+Route::get('/asset/get/{groupBy}', [AssetController::class, 'by']);
 
 Route::get('users', function () {
     $info = DB::table('wtxusers')
