@@ -30,7 +30,7 @@ Route::get('/asset/get/{groupBy}', [AssetController::class, 'by']);
 
 Route::get('users', function () {
     $info = DB::table('wtxusers')
-        ->select('full_name_chi','full_name_eng', 'departments.department', 'departments.team')
+        ->select('full_name_chi','full_name_eng', 'ext', 'departments.department', 'departments.team')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->get();
     return $info;
