@@ -28,9 +28,19 @@ use Illuminate\Support\Facades\Validator;
 // This endpoint does not need authentication.
 Route::get('/asset/get/{groupBy}', [AssetController::class, 'by']);
 
-Route::get('users', function () {
+Route::get('/profile/get', function () {
+    $info = DB::table('record_lists')
+        ->select('wtxusers.full_name_eng', 'departments.department', 'departments.team', 'locations.location')
+        ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
+        ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
+        ->join('locations', 'locations.id', '=', 'record_lists.location_id')
+        ->get();
+    return $info;
+});
+
+Route::get('/users', function () {
     $info = DB::table('wtxusers')
-        ->select('full_name_chi','full_name_eng', 'ext', 'departments.department', 'departments.team')
+        ->select('full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->get();
     return $info;
