@@ -46,7 +46,7 @@ Route::get('/picker_data/get', function () {
     $info2 = DB::table('locations')
         ->select('location')
         ->get();
-    return $info1->merge($info2);
+    return $info1->merge($info2)->all();
 });
 
 
