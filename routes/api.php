@@ -40,7 +40,7 @@ Route::get('/profile/get', function () {
 
 Route::get('/picker_data/get', function () {
     $info = DB::table(DB::raw('wtxusers', 'locations'))
-        ->select('wtxusers.full_name_chi', 'wtxusers.full_name_eng', 'wtxusers.ext', 'wtxusers.departments.department', 'departments.team', 'locations.location')
+        ->select('wtxusers.full_name_chi', 'wtxusers.full_name_eng', 'wtxusers.ext', 'departments.department', 'departments.team', 'locations.location')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->get();
     return $info;
