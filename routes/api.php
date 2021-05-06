@@ -30,7 +30,7 @@ Route::get('/asset/get/{groupBy}', [AssetController::class, 'by']);
 
 Route::get('/profile/get', function () {
     $info = DB::table('record_lists')
-        ->select('wtxusers.full_name_eng', 'departments.department', 'departments.team', 'locations.location')
+        ->select('wtxusers.full_name_eng', 'wtxusers.ext', 'departments.department', 'departments.team', 'locations.location', 'stocktake_date')
         ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->join('locations', 'locations.id', '=', 'record_lists.location_id')
