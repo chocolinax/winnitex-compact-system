@@ -38,6 +38,10 @@ Route::get('/profile/get', function () {
     return $info;
 });
 
+Route::post('/profile/add', function (Request $request) {
+    
+});
+
 Route::get('/picker_data/get', function () {
     $info1 = DB::table('wtxusers')
         ->select('full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')

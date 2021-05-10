@@ -11,8 +11,11 @@ class AssetController extends Controller
         switch ($groupBy) {
             case 'user':
                 $info = DB::table('record_lists')
-                    ->select('wtxuser_id', DB::raw('count(*) as total'))
-                    ->groupBy('wtxuser_id')
+                    ->select(DB::raw('count(record_lists.wtxuser_id) as total'), 'wtxuser.full_name_eng', 'brands.brand')
+                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->join('brands', 'brands.id', '=', 'assets.brand_id')
+                    ->groupBy('record_lists.wtxuser_id')
                     ->get();
                 break;
 
