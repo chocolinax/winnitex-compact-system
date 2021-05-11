@@ -16,8 +16,7 @@ class AssetController extends Controller
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
                     ->groupBy('wtxusers.full_name_eng', 'brands.brand')
-                    ->get()
-                    ->groupBy('full_name_eng');
+                    ->get();
                 break;
 
             case 'dept':
