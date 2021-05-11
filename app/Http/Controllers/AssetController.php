@@ -11,11 +11,42 @@ class AssetController extends Controller
         switch ($groupBy) {
             case 'user':
                 $info = DB::table('record_lists')
-                    ->select(DB::raw('count(record_lists.wtxuser_id) as total'), 'wtxusers.full_name_eng', 'brands.brand')
+                    ->select('wtxusers.full_name_eng', 'brands.brand', DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('record_lists.wtxuser_id', 'wtxusers.full_name_eng', 'brands.brand')
+                    ->groupBy('wtxusers.full_name_eng', 'brands.brand')
+                    ->get();
+                break;
+
+            case 'dept':
+                $info = DB::table('record_lists')
+                    ->select('departments.department', 'brands.brand', DB::raw('count(*) as total'))
+                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
+                    ->join('departments', 'departments.id', '=', 'wtxusers.brand_id')
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->join('brands', 'brands.id', '=', 'assets.brand_id')
+                    ->groupBy('departments.department', 'brands.brand')
+                    ->get();
+                break;
+
+            case 'type':
+                $info = DB::table('record_lists')
+                    ->select('types.type', 'departments.department', DB::raw('count(*) as total'))
+                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
+                    ->join('departments', 'departments.id', '=', 'wtxusers.brand_id')
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->join('types', 'types.id', '=', 'assets.type_id')
+                    ->groupBy('types.type', 'departments.department')
+                    ->get();
+                break;
+
+            case 'brand':
+                $info = DB::table('record_lists')
+                    ->select('types.type', 'assets.model_no', DB::raw('count(*) as total'))
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->join('types', 'types.id', '=', 'assets.type_id')
+                    ->groupBy('types.type', 'assets.model_no')
                     ->get();
                 break;
 
