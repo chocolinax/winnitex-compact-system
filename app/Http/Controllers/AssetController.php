@@ -43,10 +43,10 @@ class AssetController extends Controller
 
             case 'brand':
                 $info = DB::table('record_lists')
-                    ->select('types.type', 'assets.model_no', DB::raw('count(*) as total'))
+                    ->select('brands.brand', 'assets.model_no', DB::raw('count(*) as total'))
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
-                    ->join('types', 'types.id', '=', 'assets.type_id')
-                    ->groupBy('types.type', 'assets.model_no')
+                    ->join('brands', 'brands.id', '=', 'assets.brand_id')
+                    ->groupBy('brands.brand', 'assets.model_no')
                     ->get();
                 break;
 
