@@ -21,7 +21,7 @@ class AssetController extends Controller
 
             case 'dept':
                 $info = DB::table('record_lists')
-                    ->select('departments.department', DB::raw("string_agg(wtxusers.id, ', ') as id"), DB::raw("string_agg(brands.brand, ', ') as brands"), DB::raw('count(*) as total'))
+                    ->select('departments.department', DB::raw("string_agg(wtxusers.id::varchar, ', ') as id"), DB::raw("string_agg(brands.brand, ', ') as brands"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
