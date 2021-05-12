@@ -15,7 +15,7 @@ class AssetController extends Controller
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('wtxusers.full_name_eng')
+                    ->groupBy('wtxusers.id', 'wtxusers.full_name_eng')
                     ->get();
                 break;
 
@@ -26,7 +26,7 @@ class AssetController extends Controller
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('departments.department')
+                    ->groupBy('departments.id', 'departments.department')
                     ->get();
                 break;
 
@@ -37,7 +37,7 @@ class AssetController extends Controller
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('types', 'types.id', '=', 'assets.type_id')
-                    ->groupBy('types.type')
+                    ->groupBy('types.id', 'types.type')
                     ->get();
                 break;
 
@@ -46,7 +46,7 @@ class AssetController extends Controller
                     ->select('brands.id', 'brands.brand', DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('brands.brand')
+                    ->groupBy('brands.id', 'brands.brand')
                     ->get();
                 break;
 
