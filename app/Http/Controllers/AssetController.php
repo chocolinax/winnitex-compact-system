@@ -21,32 +21,32 @@ class AssetController extends Controller
 
             case 'dept':
                 $info = DB::table('record_lists')
-                    ->select('departments.department', 'brands.brand', DB::raw('count(*) as total'))
+                    ->select('departments.department', DB::raw("string_agg(brands.brand, ', ') as brands"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('departments.department', 'brands.brand')
+                    ->groupBy('departments.department')
                     ->get();
                 break;
 
             case 'type':
                 $info = DB::table('record_lists')
-                    ->select('types.type', 'departments.department', DB::raw('count(*) as total'))
+                    ->select('types.type', DB::raw("string_agg(departments.department, ', ') as departments"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('types', 'types.id', '=', 'assets.type_id')
-                    ->groupBy('types.type', 'departments.department')
+                    ->groupBy('types.type')
                     ->get();
                 break;
 
             case 'brand':
                 $info = DB::table('record_lists')
-                    ->select('brands.brand', 'assets.model_no', DB::raw('count(*) as total'))
+                    ->select('brands.brand', DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('brands.brand', 'assets.model_no')
+                    ->groupBy('brands.brand')
                     ->get();
                 break;
 
