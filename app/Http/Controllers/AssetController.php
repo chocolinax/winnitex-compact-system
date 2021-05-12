@@ -21,32 +21,33 @@ class AssetController extends Controller
 
             case 'dept':
                 $info = DB::table('record_lists')
-                    ->select('departments.id', 'departments.department', DB::raw("string_agg(brands.brand, ', ') as brands"), DB::raw('count(*) as total'))
+                    ->select('wtxusers.id', 'departments.department', DB::raw("string_agg(brands.brand, ', ') as brands"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('departments.id', 'departments.department')
+                    ->groupBy('wtxusers.id', 'departments.department')
                     ->get();
                 break;
 
             case 'type':
                 $info = DB::table('record_lists')
-                    ->select('types.id', 'types.type', DB::raw("string_agg(departments.department, ', ') as departments"), DB::raw('count(*) as total'))
+                    ->select('wtxusers.id', 'types.type', DB::raw("string_agg(departments.department, ', ') as departments"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('types', 'types.id', '=', 'assets.type_id')
-                    ->groupBy('types.id', 'types.type')
+                    ->groupBy('wtxusers.id', 'types.type')
                     ->get();
                 break;
 
             case 'brand':
                 $info = DB::table('record_lists')
-                    ->select('brands.id', 'brands.brand', DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
+                    ->select('wtxusers.id', 'brands.brand', DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
+                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('brands.id', 'brands.brand')
+                    ->groupBy('wtxusers.id', 'brands.brand')
                     ->get();
                 break;
 
