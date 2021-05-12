@@ -32,7 +32,7 @@ class AssetController extends Controller
 
             case 'type':
                 $info = DB::table('record_lists')
-                    ->select('types.type', DB::raw("string_agg(wtxusers.id, ', ') as id"), DB::raw("string_agg(departments.department, ', ') as departments"), DB::raw('count(*) as total'))
+                    ->select('types.type', DB::raw("string_agg(wtxusers.id::varchar, ', ') as id"), DB::raw("string_agg(departments.department, ', ') as departments"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
@@ -43,7 +43,7 @@ class AssetController extends Controller
 
             case 'brand':
                 $info = DB::table('record_lists')
-                    ->select('brands.brand', DB::raw("string_agg(wtxusers.id, ', ') as id"), DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
+                    ->select('brands.brand', DB::raw("string_agg(wtxusers.id::varchar, ', ') as id"), DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
