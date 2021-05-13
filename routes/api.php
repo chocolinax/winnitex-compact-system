@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssetController;
+use App\Http\Controllers\ProfileController;
 use App\Models\AssetStocktakeHeader;
 use App\Models\AssetStocktakeLine;
 use App\Models\Device;
@@ -28,18 +29,10 @@ use Illuminate\Support\Facades\Validator;
 // This endpoint does not need authentication.
 Route::get('/asset/get/{groupBy}', [AssetController::class, 'by']);
 
-Route::get('/profile/get', function () {
-    $info = DB::table('record_lists')
-        ->select('wtxusers.full_name_eng', 'wtxusers.ext', 'departments.department', 'departments.team', 'locations.location', 'stocktake_date')
-        ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
-        ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
-        ->join('locations', 'locations.id', '=', 'record_lists.location_id')
-        ->get();
-    return $info;
-});
+Route::get('/profile/get/{groupBy}/{id}', [ProfileController::class, 'by']);
 
 Route::post('/profile/add', function (Request $request) {
-    
+
 });
 
 Route::get('/picker_data/get', function () {
