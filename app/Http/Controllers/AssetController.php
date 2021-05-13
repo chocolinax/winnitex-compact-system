@@ -10,12 +10,20 @@ class AssetController extends Controller
     public function by($groupBy) {
         switch ($groupBy) {
             case 'user':
+                $subQuery = DB::table('record_lists')
+                    ->select('wtxuser_id', 'assets.brand_id', DB::raw('count(*) as ttlbybrand'))
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->groupBy('wtxuser_id', 'assets.brand_id');
+
                 $info = DB::table('record_lists')
-                    ->select('wtxusers.id', 'wtxusers.full_name_eng', DB::raw("string_agg(brands.brand, ', ') as brands"), DB::raw('count(*) as total'))
+                    ->select('wtxusers.id', 'wtxusers.full_name_eng', DB::raw("string_agg(concat(brands.brand,': ', sub.ttlbybrand), ', ') as ttlbybrand"))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                    ->groupBy('wtxusers.id', 'wtxusers.full_name_eng')
+                    ->joinSub($subQuery, 'sub', function ($join) {
+                        $join->on('wtxusers.id', '=', 'record_lists.wtxuser_id')
+                            ->on('brands.id', '=', 'assets.brand_id');
+                    })->groupBy('wtxusers.id', 'wtxusers.full_name_eng')
                     ->get();
                 break;
 
