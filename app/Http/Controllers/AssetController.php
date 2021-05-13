@@ -62,6 +62,6 @@ class AssetController extends Controller
                 # code...
                 break;
         }
-        return $info;
+        return $subQuery;
     }
 }
