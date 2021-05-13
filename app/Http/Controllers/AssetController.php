@@ -55,7 +55,7 @@ class AssetController extends Controller
                     ->groupBy('wtxuser_id', 'wtxusers.department_id');
 
                 $info = DB::table('record_lists')
-                    ->select('types.id', 'types.type', DB::raw("string_agg(concat(types.type,': ', sub.ttlbydept), ', ') as ttlbydept"))
+                    ->select('types.id', 'types.type', DB::raw("string_agg(concat(departments.department,': ', sub.ttlbydept), ', ') as ttlbydept"))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
