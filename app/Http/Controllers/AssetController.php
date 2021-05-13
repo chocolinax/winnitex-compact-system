@@ -49,12 +49,21 @@ class AssetController extends Controller
                 break;
 
             case 'type':
+                $subQuery = DB::table('record_lists')
+                    ->select('wtxuser_id', 'assets.type_id', DB::raw('count(*) as ttlbydept'))
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->groupBy('wtxuser_id', 'assets.type_id');
+
                 $info = DB::table('record_lists')
-                    ->select('types.id', 'types.type', DB::raw("string_agg(departments.department, ', ') as departments"), DB::raw('count(*) as total'))
+                    ->select('types.id', 'types.type', DB::raw("string_agg(concat(types.type,': ', sub.ttlbydept), ', ') as ttlbydept"))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('types', 'types.id', '=', 'assets.type_id')
+                    ->joinSub($subQuery, 'sub', function ($join) {
+                        $join->on('wtxusers.id', '=', 'sub.wtxuser_id')
+                            ->on('types.id', '=', 'sub.type_id');
+                    })
                     ->groupBy('types.id', 'types.type')
                     ->get();
                 break;
