@@ -16,6 +16,7 @@ class ProfileController extends Controller
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('locations', 'locations.id', '=', 'record_lists.location_id')
                     ->where('departments.id', '=', $id)
+                    ->groupBy('wtxusers.full_name_eng')
                     ->get();
                 break;
 
