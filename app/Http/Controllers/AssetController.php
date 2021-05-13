@@ -13,7 +13,7 @@ class AssetController extends Controller
                 $subQuery = DB::table('record_lists')
                     ->select('wtxuser_id', 'assets.brand_id', DB::raw('count(*) as ttlbybrand'))
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
-                    ->groupBy('wtxuser_id', 'assets.brand_id');
+                    ->groupBy('wtxuser_id', 'assets.brand_id')->get();
 
                 $info = DB::table('record_lists')
                     ->select('wtxusers.id', 'wtxusers.full_name_eng', DB::raw("string_agg(concat(brands.brand,': ', sub.ttlbybrand), ', ') as ttlbybrand"))
