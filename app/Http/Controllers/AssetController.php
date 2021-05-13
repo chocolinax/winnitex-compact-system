@@ -13,18 +13,19 @@ class AssetController extends Controller
                 $subQuery = DB::table('record_lists')
                     ->select('wtxuser_id', 'assets.brand_id', DB::raw('count(*) as ttlbybrand'))
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
-                    ->groupBy('wtxuser_id', 'assets.brand_id')->get();
+                    ->groupBy('wtxuser_id', 'assets.brand_id');
 
-                // $info = DB::table('record_lists')
-                //     ->select('wtxusers.id', 'wtxusers.full_name_eng', DB::raw("string_agg(concat(brands.brand,': ', sub.ttlbybrand), ', ') as ttlbybrand"))
-                //     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
-                //     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
-                //     ->join('brands', 'brands.id', '=', 'assets.brand_id')
-                //     ->joinSub($subQuery, 'sub', function ($join) {
-                //         $join->on('wtxusers.id', '=', 'record_lists.wtxuser_id')
-                //             ->on('brands.id', '=', 'assets.brand_id');
-                //     })->groupBy('wtxusers.id', 'wtxusers.full_name_eng')
-                //     ->get();
+                $info = DB::table('record_lists')
+                    ->select('wtxusers.id', 'wtxusers.full_name_eng', DB::raw("string_agg(concat(brands.brand,': ', sub.ttlbybrand), ', ') as ttlbybrand"))
+                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->join('brands', 'brands.id', '=', 'assets.brand_id')
+                    ->joinSub($subQuery, 'sub', function ($join) {
+                        $join->on('wtxusers.id', '=', 'record_lists.wtxuser_id');
+                            // ->on('brands.id', '=', 'assets.brand_id');
+                    })
+                    ->groupBy('wtxusers.id', 'wtxusers.full_name_eng')
+                    ->get();
                 break;
 
             case 'dept':
@@ -62,6 +63,6 @@ class AssetController extends Controller
                 # code...
                 break;
         }
-        return $subQuery;
+        return $info;
     }
 }
