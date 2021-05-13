@@ -22,7 +22,7 @@ class AssetController extends Controller
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
                     ->joinSub($subQuery, 'sub', function ($join) {
                         $join->on('wtxusers.id', '=', 'record_lists.wtxuser_id')
-                            ->orOn('brands.id', '=', 'assets.brand_id');
+                            ->andOn('brands.id', '=', 'assets.brand_id');
                     })
                     ->groupBy('wtxusers.id', 'wtxusers.full_name_eng')
                     ->get();
