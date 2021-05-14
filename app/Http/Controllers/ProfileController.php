@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class ProfileController extends Controller
 {
-    public function by($groupBy, $id) {
+    public function get($groupBy, $id) {
         switch ($groupBy) {
             case 'dept':
                 $info = DB::table('record_lists')

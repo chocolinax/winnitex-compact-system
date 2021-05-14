@@ -27,9 +27,21 @@ use Illuminate\Support\Facades\Validator;
 */
 
 // This endpoint does not need authentication.
-Route::get('/asset/get/{groupBy}', [AssetController::class, 'by']);
+Route::get('/asset/get/{groupBy}', [AssetController::class, 'get']);
 
-Route::get('/profile/get/{groupBy}/{id}', [ProfileController::class, 'by']);
+Route::get('/profile/get/{groupBy}/{id}', [ProfileController::class, 'get']);
+
+Route::get('/user_profile/get/{id}', function ($id) {
+    $info = DB::table('record_lists')
+        ->select('record_lists.wtxuser_id', 'brands.brand', 'types.type', 'assets.model_no', 'record_lists.stocktake_date')
+        ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+        ->join('brands', 'brands.id', '=', 'record_lists.brand_id')
+        ->join('types', 'types.id', '=', 'record_lists.type_id')
+        ->where('record_lists.wtxuser_id', '=', $id)
+        ->groupBy('record_lists.wtxuser_id', 'brands.brand', 'types.type', 'assets.model_no', 'record_lists.stocktake_date')
+        ->get();
+    return $info;
+});
 
 Route::post('/profile/add', function (Request $request) {
 

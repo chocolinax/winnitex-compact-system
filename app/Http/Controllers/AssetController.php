@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class AssetController extends Controller
 {
-    public function by($groupBy) {
+    public function get($groupBy) {
         switch ($groupBy) {
             case 'user':
                 $subQuery = DB::table('record_lists')
