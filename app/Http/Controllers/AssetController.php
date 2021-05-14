@@ -53,6 +53,7 @@ class AssetController extends Controller
             case 'type':
                 $subQuery = DB::table('record_lists')
                     ->select('assets.type_id', 'wtxusers.department_id', DB::raw('count(*) as ttlbydept'))
+                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('types', 'types.id', '=', 'assets.type_id')
                     ->groupBy('assets.type_id', 'wtxusers.department_id');
