@@ -73,10 +73,19 @@ class AssetController extends Controller
                 break;
 
             case 'brand':
+                $subQuery = DB::table('record_lists')
+                    ->select('assets.brand_id', 'assets.model_no', DB::raw('count(*) as ttlbymdl'))
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->groupBy('assets.brand_id', 'assets.model_no');
+
                 $info = DB::table('record_lists')
-                    ->select('brands.id', 'brands.brand', DB::raw("string_agg(assets.model_no, ', ') as model_no"), DB::raw('count(*) as total'))
+                    ->select('brands.id', 'brands.brand', DB::raw("string_agg(assets.model_no, ', ') as model_no"))
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
+                    ->joinSub($subQuery, 'sub', function ($join) {
+                        $join->on('brands.id', '=', 'sub.brand_id')
+                            ->on('assets.model_no', '=', 'sub.model_no');
+                    })
                     ->groupBy('brands.id', 'brands.brand')
                     ->get();
                 break;
