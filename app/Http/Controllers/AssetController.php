@@ -43,7 +43,7 @@ class AssetController extends Controller
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
                     ->joinSub($subQuery, 'sub', function ($join) {
-                        $join->on('departments.id', '=', 'wtxusers.department_id')
+                        $join->on('departments.id', '=', 'sub.department_id')
                             ->on('brands.id', '=', 'sub.brand_id');
                     })
                     ->groupBy('departments.id', 'departments.department')
