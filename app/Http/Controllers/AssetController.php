@@ -52,9 +52,10 @@ class AssetController extends Controller
 
             case 'type':
                 $subQuery = DB::table('record_lists')
-                    ->select('wtxuser_id', 'wtxusers.department_id', DB::raw('count(*) as ttlbydept'))
-                    ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
-                    ->groupBy('wtxuser_id', 'wtxusers.department_id');
+                    ->select('assets.type_id', 'wtxusers.department_id', DB::raw('count(*) as ttlbydept'))
+                    ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
+                    ->join('types', 'types.id', '=', 'assets.type_id')
+                    ->groupBy('assets.type_id', 'wtxusers.department_id');
 
                 $info = DB::table('record_lists')
                     ->select('types.id', 'types.type', DB::raw("string_agg(concat(departments.department,': ', sub.ttlbydept), ', ') as ttlbydept"))
@@ -63,7 +64,7 @@ class AssetController extends Controller
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('types', 'types.id', '=', 'assets.type_id')
                     ->joinSub($subQuery, 'sub', function ($join) {
-                        $join->on('wtxusers.id', '=', 'sub.wtxuser_id')
+                        $join->on('types.id', '=', 'sub.type_id')
                             ->on('departments.id', '=', 'sub.department_id');
                     })
                     ->groupBy('types.id', 'types.type')
