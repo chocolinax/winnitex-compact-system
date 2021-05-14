@@ -36,7 +36,7 @@ Route::get('/user_profile/get/{id}', function ($id) {
         ->select('record_lists.wtxuser_id', 'brands.brand', 'types.type', 'assets.model_no', 'record_lists.stocktake_date')
         ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
         ->join('brands', 'brands.id', '=', 'assets.brand_id')
-        ->join('types', 'types.id', '=', 'record_lists.type_id')
+        ->join('types', 'types.id', '=', 'assets.type_id')
         ->where('record_lists.wtxuser_id', '=', $id)
         ->groupBy('record_lists.wtxuser_id', 'brands.brand', 'types.type', 'assets.model_no', 'record_lists.stocktake_date')
         ->get();
