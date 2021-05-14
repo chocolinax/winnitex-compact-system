@@ -74,20 +74,19 @@ class AssetController extends Controller
 
             case 'brand':
                 $subQuery = DB::table('record_lists')
-                    ->select('assets.brand_id', 'assets.model_no', 'wtxusers.department_id', DB::raw('count(*) as ttlbymdl'))
+                    ->select('assets.brand_id', 'wtxusers.department_id', DB::raw('count(*) as ttlbydept'))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
-                    ->groupBy('assets.brand_id', 'assets.model_no', 'wtxusers.department_id');
+                    ->groupBy('assets.brand_id', 'wtxusers.department_id');
 
                 $info = DB::table('record_lists')
-                    ->select('brands.id', 'brands.brand', 'departments.department', DB::raw("string_agg(concat(assets.model_no,': ', sub.ttlbymdl), ', ') as model_no"))
+                    ->select('brands.id', 'brands.brand', 'departments.department', DB::raw("string_agg(concat(departments.department,': ', sub.ttlbydept), ', ') as model_no"))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
                     ->join('brands', 'brands.id', '=', 'assets.brand_id')
                     ->joinSub($subQuery, 'sub', function ($join) {
                         $join->on('brands.id', '=', 'sub.brand_id')
-                            ->on('assets.model_no', '=', 'sub.model_no')
                             ->on('departments.id', '=', 'sub.department_id');
                     })
                     ->groupBy('brands.id', 'brands.brand')
