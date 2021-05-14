@@ -80,7 +80,7 @@ class AssetController extends Controller
                     ->groupBy('assets.brand_id', 'wtxusers.department_id');
 
                 $info = DB::table('record_lists')
-                    ->select('brands.id', 'brands.brand', 'departments.department', DB::raw("string_agg(concat(departments.department,': ', sub.ttlbydept), ', ') as model_no"))
+                    ->select('brands.id', 'brands.brand', DB::raw("string_agg(concat(departments.department,': ', sub.ttlbydept), ', ') as model_no"))
                     ->join('wtxusers', 'wtxusers.id', '=', 'record_lists.wtxuser_id')
                     ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
                     ->join('assets', 'assets.id', '=', 'record_lists.asset_id')
