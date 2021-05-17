@@ -48,6 +48,15 @@ Route::post('/profile/add', function (Request $request) {
 
 });
 
+Route::post('/user/get/{id}', function ($id) {
+    $info = DB::table('wtxusers')
+        ->select('id', 'full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
+        ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
+        ->where('record_lists.wtxuser_id', '=', $id)
+        ->get();
+        return $info;
+});
+
 Route::get('/picker_data/get', function () {
     $info1 = DB::table('wtxusers')
         ->select('full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
