@@ -50,7 +50,7 @@ Route::post('/profile/add', function (Request $request) {
 
 Route::get('/user/get/{id}', function ($id) {
     $info = DB::table('wtxusers')
-        ->select('id', 'full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
+        ->select('wtxusers.id', 'full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->where('record_lists.wtxuser_id', '=', $id)
         ->get();
