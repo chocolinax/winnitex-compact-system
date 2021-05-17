@@ -53,9 +53,8 @@ Route::get('/user/get/{id}', function ($id) {
         ->select('wtxusers.id', 'full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->where('wtxusers.id', '=', $id)
-        ->get()
         ->first();
-        return $info;
+        return response()->json($info);
 });
 
 Route::get('/picker_data/get', function () {
