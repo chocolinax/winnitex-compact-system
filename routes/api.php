@@ -44,8 +44,29 @@ Route::get('/user_profile/get/{id}', function ($id) {
     return $info;
 });
 
-Route::post('/profile/add', function (Request $request) {
+Route::post('/user_profile/add', function (Request $request) {
 
+});
+
+Route::post('/details/add', function (Request $request) {
+    $brand = DB::table('brands')->firstOrNew([
+        'brand' => $request->brand
+    ]);
+    $type = DB::table('types')->firstOrNew([
+        'type' => $request->type
+    ]);
+
+    $asset = DB::table('assets')->insert([
+        'brand_id' => $brand->id,
+        'type_id' => $type->id,
+        'model_no' => $request->model,
+        'serial_no' => $request->serial,
+        'alias_name' => $request->alias,
+        'spec' => $request->spec,
+        'comment' => $request->comment
+    ]);
+
+    return $asset;
 });
 
 Route::get('/user/get/{id}', function ($id) {
@@ -53,6 +74,16 @@ Route::get('/user/get/{id}', function ($id) {
         ->select('wtxusers.id', 'full_name_chi', 'full_name_eng', 'ext', 'departments.department', 'departments.team')
         ->join('departments', 'departments.id', '=', 'wtxusers.department_id')
         ->where('wtxusers.id', '=', $id)
+        ->first();
+        return response()->json($info);
+});
+
+Route::get('/asset/fill/{sn}', function ($sn) {
+    $info = DB::table('assets')
+        ->select('brands.brand', 'types.type', 'model_no', 'alias_name', 'spec', 'comment')
+        ->join('brands', 'brands.id', '=', 'assets.brand_id')
+        ->join('types', 'types.id', '=', 'assets.type_id')
+        ->where('assets.serial_no', '=', $sn)
         ->first();
         return response()->json($info);
 });
